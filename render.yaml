@@ -1,10 +1,16 @@
+databases:
+  - name: himalayan-spring-db
+    databaseName: himalayan_spring
+    user: app
+    plan: free
+
 services:
   - type: web
     name: himalayan-spring-recharge-network
     runtime: node
     plan: free
-    buildCommand: pnpm install --frozen-lockfile && pnpm drizzle-kit generate && pnpm drizzle-kit migrate && pnpm build
-    startCommand: pnpm start
+    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    startCommand: pnpm db:migrate && pnpm start
     healthCheckPath: /api/trpc/system.health
     envVars:
       - key: NODE_ENV
@@ -12,9 +18,11 @@ services:
       - key: ENABLE_LIVE_INGESTION
         value: "false"
       - key: DATABASE_URL
-        sync: false
+        fromDatabase:
+          name: himalayan-spring-db
+          property: connectionString
       - key: JWT_SECRET
-        sync: false
+        generateValue: true
       - key: VITE_APP_ID
         sync: false
       - key: OAUTH_SERVER_URL

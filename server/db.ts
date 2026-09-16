@@ -1,5 +1,6 @@
 import { eq, desc } from "drizzle-orm";
-import { drizzle } from "drizzle-orm/mysql2";
+import { drizzle } from "drizzle-orm/node-postgres";
+import { Pool } from "pg";
 import { InsertUser, User, auditLogs, modelConfigs, users } from "../drizzle/schema";
 import { ENV } from "./_core/env";
 import { DEFAULT_THRESHOLDS, DEFAULT_WEIGHTS } from "./domain";
@@ -8,8 +9,18 @@ let _db: ReturnType<typeof drizzle> | null = null;
 let memoryConfig = { version: "weighted-risk-v1", weights: DEFAULT_WEIGHTS, thresholds: DEFAULT_THRESHOLDS, tankerConfig: { tankerCapacityLitres: 12000, costPerTrip: 4200, maxTripsPerDay: 2, fuelSurcharge: 0.12 } };
 
 export async function getDb() {
-  if (!_db && process.env.DATABASE_URL) {
-    try { _db = drizzle(process.env.DATABASE_URL); } catch (error) { console.warn("[Database] Failed to connect:", error); _db = null; }
+  if (!_db && ENV.databaseUrl) {
+    try {
+      const pool = new Pool({
+        connectionString: ENV.databaseUrl,
+        max: 5,
+        ssl: ENV.isProduction ? { rejectUnauthorized: false } : undefined,
+      });
+      _db = drizzle(pool);
+    } catch (error) {
+      console.warn("[Database] Failed to connect:", error);
+      _db = null;
+    }
   }
   return _db;
 }
@@ -19,10 +30,10 @@ export async function upsertUser(user: InsertUser): Promise<void> {
   const db = await getDb();
   if (!db) return;
   const values: InsertUser = { openId: user.openId, name: user.name ?? null, email: user.email ?? null, loginMethod: user.loginMethod ?? null, lastSignedIn: user.lastSignedIn ?? new Date() };
-  const updateSet: Record<string, unknown> = { name: values.name, email: values.email, loginMethod: values.loginMethod, lastSignedIn: values.lastSignedIn };
+  const updateSet: Record<string, unknown> = { name: values.name, email: values.email, loginMethod: values.loginMethod, lastSignedIn: values.lastSignedIn, updatedAt: new Date() };
   if (user.role) { values.role = user.role; updateSet.role = user.role; }
   else if (user.openId === ENV.ownerOpenId) { values.role = "DBA"; updateSet.role = "DBA"; }
-  await db.insert(users).values(values).onDuplicateKeyUpdate({ set: updateSet });
+  await db.insert(users).values(values).onConflictDoUpdate({ target: users.openId, set: updateSet });
 }
 
 export async function getUserByOpenId(openId: string): Promise<User | undefined> {

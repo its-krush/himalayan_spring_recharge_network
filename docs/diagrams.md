@@ -8,7 +8,7 @@ flowchart LR
   Browser --> R[REST aliases + OpenAPI]
   T --> A[Manus OAuth + role middleware]
   T --> E[Risk and water engines]
-  T --> D[(MySQL/TiDB + Drizzle)]
+  T --> D[(PostgreSQL + Drizzle)]
   I[Public data adapters] --> C[Cache and provenance records]
   C --> E
 ```

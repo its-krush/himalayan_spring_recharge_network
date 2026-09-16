@@ -6,7 +6,7 @@ A production-style, full-stack **disaster and water-resource decision-support pr
 
 ## What is implemented
 
-The application is a React 19 + TypeScript frontend served by an Express/tRPC backend with Drizzle/MySQL persistence and Manus OAuth. The database schema includes users and roles, regions, data sources, model configurations, predictions, hospitals, water resources, disaster events, and audit logs. The frontend provides four role workspaces: Disaster Manager, Water Manager, Hospital Manager, and DBA.
+The application is a React 19 + TypeScript frontend served by an Express/tRPC backend with Drizzle/PostgreSQL persistence and Manus OAuth. The database schema includes users and roles, regions, data sources, model configurations, predictions, hospitals, water resources, disaster events, and audit logs. The frontend provides four role workspaces: Disaster Manager, Water Manager, Hospital Manager, and DBA.
 
 The central terrain panel offers a performance-friendly SVG 3D projection and a 2D fallback, with togglable rainfall, rivers, glacier, flood, landslide, and hospital layers. It is a geospatial visualization scaffold intended to accept GeoJSON/terrain tiles later without rewriting the dashboard contracts.
 
@@ -18,7 +18,7 @@ flowchart LR
   UI --> REST[Read-only REST /api]
   RPC --> AUTH[Manus OAuth + role middleware]
   RPC --> ENGINE[Transparent weighted engines]
-  RPC --> DB[(MySQL / TiDB via Drizzle)]
+  ENGINE --> DB[(PostgreSQL via Drizzle)]
   ENGINE --> PROV[Data provenance metadata]
   INGEST[Optional NASA POWER adapter] --> CACHE[Cached/source status]
   CACHE --> ENGINE
@@ -28,7 +28,7 @@ The frontend is in `client/`. The backend domain model and deterministic engines
 
 ## Local setup
 
-Requirements: Node.js 22+, pnpm 10+, and a MySQL/TiDB database. A database is optional for read-only demo mode, but required for persisted users, model versions, and audit logs.
+Requirements: Node.js 22+, pnpm 10+, and a PostgreSQL database. A database is optional for read-only demo mode, but required for persisted users, model versions, and audit logs.
 
 ```bash
 git clone https://github.com/its-krush/himalayan_spring_recharge_network.git
@@ -48,7 +48,7 @@ See `.env.example`. The important variables are:
 
 | Variable | Purpose |
 | --- | --- |
-| `DATABASE_URL` | MySQL/TiDB connection string for the relational schema. |
+| `DATABASE_URL` | PostgreSQL connection string for the relational schema. |
 | `JWT_SECRET` | Session signing secret. |
 | `VITE_APP_ID`, `OAUTH_SERVER_URL`, `VITE_OAUTH_PORTAL_URL` | Manus OAuth application settings. |
 | `OWNER_OPEN_ID`, `OWNER_NAME` | Owner identity; the owner is promoted to DBA by the auth upsert helper. |
@@ -158,10 +158,10 @@ The test suite covers logout cookie behavior, normalized risk scoring and contri
 
 Create a Render Blueprint from `render.yaml`, or configure the services manually:
 
-1. Create a Render MySQL-compatible database or provide a managed MySQL/TiDB `DATABASE_URL`.
+1. Create the PostgreSQL database from the included `render.yaml` Blueprint, or provide any managed PostgreSQL `DATABASE_URL`.
 2. Create a web service from this repository.
-3. Build command: `pnpm install --frozen-lockfile && pnpm drizzle-kit generate && pnpm drizzle-kit migrate && pnpm build`.
-4. Start command: `pnpm start`.
+3. The Blueprint uses `corepack enable && pnpm install --frozen-lockfile && pnpm build` as the build command.
+4. The Blueprint runs `pnpm db:migrate && pnpm start` at service start so migrations run against the provisioned PostgreSQL database.
 5. Set `NODE_ENV=production`, `DATABASE_URL`, `JWT_SECRET`, OAuth values, `OWNER_OPEN_ID`, `OWNER_NAME`, and `ENABLE_LIVE_INGESTION=false`.
 6. Set the health check path to `/api/trpc/system.health` or `/api/openapi.json`.
 7. Update the Manus OAuth callback/redirect origin to the Render service URL.
