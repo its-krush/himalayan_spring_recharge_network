@@ -1,0 +1,72 @@
+{
+  "generatedAt": "2026-09-16T17:15:40.669Z",
+  "mode": "demo-fallback",
+  "policy": "Public-source values are only persisted after successful retrieval; unavailable sources remain unavailable.",
+  "sources": [
+    {
+      "id": "nasa-power",
+      "name": "NASA POWER",
+      "organization": "NASA Langley Research Center",
+      "url": "https://power.larc.nasa.gov/",
+      "coverage": "Global point-based climate and meteorology",
+      "variables": "Precipitation, temperature, solar and wind indicators",
+      "frequency": "Daily / hourly depending on product",
+      "lastRetrieved": "Not retrieved in demo mode",
+      "status": "Fallback available",
+      "dataType": "public source",
+      "fallbackPolicy": "Use last successful cache; never fabricate"
+    },
+    {
+      "id": "glims",
+      "name": "GLIMS Glacier Database",
+      "organization": "NSIDC / GLIMS consortium",
+      "url": "https://www.glims.org/",
+      "coverage": "Global glacier outlines and catalog metadata",
+      "variables": "Glacier outline, name, observation metadata",
+      "frequency": "Periodic scientific updates",
+      "lastRetrieved": "Catalog reference only",
+      "status": "Reference metadata",
+      "dataType": "public source",
+      "fallbackPolicy": "Use last successful cache; never fabricate"
+    },
+    {
+      "id": "hydrosheds",
+      "name": "HydroSHEDS",
+      "organization": "WWF / USGS / partner institutions",
+      "url": "https://www.hydrosheds.org/",
+      "coverage": "Global hydrology and river network layers",
+      "variables": "Drainage, river network, basin topology",
+      "frequency": "Static releases",
+      "lastRetrieved": "Static source configured",
+      "status": "Static layer",
+      "dataType": "public source",
+      "fallbackPolicy": "Use last successful cache; never fabricate"
+    },
+    {
+      "id": "osm",
+      "name": "OpenStreetMap",
+      "organization": "OpenStreetMap contributors",
+      "url": "https://www.openstreetmap.org/",
+      "coverage": "Community-mapped geographic features",
+      "variables": "Hospitals, roads, settlements and water features",
+      "frequency": "Continuous community updates",
+      "lastRetrieved": "Not queried in demo mode",
+      "status": "Fallback available",
+      "dataType": "public source",
+      "fallbackPolicy": "Use last successful cache; never fabricate"
+    },
+    {
+      "id": "demo",
+      "name": "Demo scenario indicators",
+      "organization": "Application seed data",
+      "url": "https://github.com/its-krush/himalayan_spring_recharge_network",
+      "coverage": "Four demonstration regions",
+      "variables": "Synthetic rainfall, river, soil, slope, glacier and demand indicators",
+      "frequency": "Static until scenario change",
+      "lastRetrieved": "Seeded at build time",
+      "status": "DEMONSTRATION DATA",
+      "dataType": "synthetic",
+      "fallbackPolicy": "Explicit demo scenario"
+    }
+  ]
+}

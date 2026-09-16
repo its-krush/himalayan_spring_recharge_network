@@ -1,0 +1,14 @@
+Environment reference for local and Render deployment
+
+NODE_ENV=development
+PORT=3000
+DATABASE_URL=mysql://user:password@localhost:3306/himalayan_spring
+JWT_SECRET=replace-with-a-long-random-secret
+VITE_APP_ID=replace-with-manus-oauth-app-id
+OAUTH_SERVER_URL=https://api.manus.im
+VITE_OAUTH_PORTAL_URL=https://auth.manus.im
+OWNER_OPEN_ID=replace-with-owner-open-id
+OWNER_NAME=Platform Owner
+ENABLE_LIVE_INGESTION=false
+
+See README.md for the purpose of each variable. In managed WebDev, secrets are configured through the project secret manager rather than committed to source control.

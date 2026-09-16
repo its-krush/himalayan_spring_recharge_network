@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: himalayan-spring-recharge-network
+    runtime: node
+    plan: free
+    buildCommand: pnpm install --frozen-lockfile && pnpm drizzle-kit generate && pnpm drizzle-kit migrate && pnpm build
+    startCommand: pnpm start
+    healthCheckPath: /api/trpc/system.health
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: ENABLE_LIVE_INGESTION
+        value: "false"
+      - key: DATABASE_URL
+        sync: false
+      - key: JWT_SECRET
+        sync: false
+      - key: VITE_APP_ID
+        sync: false
+      - key: OAUTH_SERVER_URL
+        value: https://api.manus.im
+      - key: VITE_OAUTH_PORTAL_URL
+        sync: false
+      - key: OWNER_OPEN_ID
+        sync: false
+      - key: OWNER_NAME
+        sync: false
