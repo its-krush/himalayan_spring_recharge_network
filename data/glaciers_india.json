@@ -1,0 +1,182 @@
+{
+  "dokriani": {
+    "id": "dokriani",
+    "name": "Dokriani Glacier",
+    "state": "Uttarakhand",
+    "district": "Uttarkashi",
+    "country": "India",
+    "coordinates": {"lat": 30.85, "lon": 78.82},
+    "base_elevation_masl": 3950,
+    "critical_springs_downstream": ["Bhagirathi_S1", "Uttarkashi_N02"]
+  },
+  "gangotri": {
+    "id": "gangotri",
+    "name": "Gangotri Glacier",
+    "state": "Uttarakhand",
+    "district": "Uttarkashi",
+    "country": "India",
+    "coordinates": {"lat": 30.92, "lon": 79.08},
+    "base_elevation_masl": 4320,
+    "critical_springs_downstream": ["Gaumukh_S1", "Harsil_N01"]
+  },
+  "chorabari": {
+    "id": "chorabari",
+    "name": "Chorabari Glacier",
+    "state": "Uttarakhand",
+    "district": "Rudraprayag",
+    "country": "India",
+    "coordinates": {"lat": 30.73, "lon": 79.06},
+    "base_elevation_masl": 3800,
+    "critical_springs_downstream": ["Mandakini_S1", "Rambara_N04"]
+  },
+  "milam": {
+    "id": "milam",
+    "name": "Milam Glacier",
+    "state": "Uttarakhand",
+    "district": "Pithoragarh",
+    "country": "India",
+    "coordinates": {"lat": 30.47, "lon": 80.11},
+    "base_elevation_masl": 3870,
+    "critical_springs_downstream": ["GoriGanga_S1", "Munsyari_N01"]
+  },
+  "pindari": {
+    "id": "pindari",
+    "name": "Pindari Glacier",
+    "state": "Uttarakhand",
+    "district": "Bageshwar",
+    "country": "India",
+    "coordinates": {"lat": 30.26, "lon": 79.99},
+    "base_elevation_masl": 3620,
+    "critical_springs_downstream": ["Pindar_S2", "Khati_N01"]
+  },
+  "khatling": {
+    "id": "khatling",
+    "name": "Khatling Glacier",
+    "state": "Uttarakhand",
+    "district": "Tehri Garhwal",
+    "country": "India",
+    "coordinates": {"lat": 30.80, "lon": 78.98},
+    "base_elevation_masl": 3700,
+    "critical_springs_downstream": ["Bhilangana_S1", "Guttu_N03"]
+  },
+  "satopanth": {
+    "id": "satopanth",
+    "name": "Satopanth Glacier",
+    "state": "Uttarakhand",
+    "district": "Chamoli",
+    "country": "India",
+    "coordinates": {"lat": 30.74, "lon": 79.35},
+    "base_elevation_masl": 4400,
+    "critical_springs_downstream": ["Alaknanda_S1", "Mana_N01"]
+  },
+  "bara_shigri": {
+    "id": "bara_shigri",
+    "name": "Bara Shigri Glacier",
+    "state": "Himachal Pradesh",
+    "district": "Lahaul and Spiti",
+    "country": "India",
+    "coordinates": {"lat": 32.18, "lon": 77.62},
+    "base_elevation_masl": 3950,
+    "critical_springs_downstream": ["Chandra_S1", "Batal_N02"]
+  },
+  "chhota_shigri": {
+    "id": "chhota_shigri",
+    "name": "Chhota Shigri Glacier",
+    "state": "Himachal Pradesh",
+    "district": "Lahaul and Spiti",
+    "country": "India",
+    "coordinates": {"lat": 32.25, "lon": 77.52},
+    "base_elevation_masl": 4050,
+    "critical_springs_downstream": ["Chandra_S2", "Gramphu_N01"]
+  },
+  "beas_kund": {
+    "id": "beas_kund",
+    "name": "Beas Kund Glacieret",
+    "state": "Himachal Pradesh",
+    "district": "Kullu",
+    "country": "India",
+    "coordinates": {"lat": 32.36, "lon": 77.08},
+    "base_elevation_masl": 3700,
+    "critical_springs_downstream": ["Beas_S1", "Solang_N05"]
+  },
+  "parbati": {
+    "id": "parbati",
+    "name": "Parbati Glacier",
+    "state": "Himachal Pradesh",
+    "district": "Kullu",
+    "country": "India",
+    "coordinates": {"lat": 31.88, "lon": 77.72},
+    "base_elevation_masl": 4100,
+    "critical_springs_downstream": ["Parbati_S1", "Manikaran_N01"]
+  },
+  "siachen": {
+    "id": "siachen",
+    "name": "Siachen Glacier",
+    "state": "Ladakh",
+    "district": "Leh",
+    "country": "India",
+    "coordinates": {"lat": 35.50, "lon": 77.10},
+    "base_elevation_masl": 5300,
+    "critical_springs_downstream": ["Nubra_S1", "Diskit_N01"]
+  },
+  "drang_drung": {
+    "id": "drang_drung",
+    "name": "Drang-Drung Glacier",
+    "state": "Ladakh",
+    "district": "Kargil",
+    "country": "India",
+    "coordinates": {"lat": 33.52, "lon": 76.32},
+    "base_elevation_masl": 4780,
+    "critical_springs_downstream": ["Doda_S1", "Padum_N02"]
+  },
+  "machoi": {
+    "id": "machoi",
+    "name": "Machoi Glacier",
+    "state": "Ladakh",
+    "district": "Kargil",
+    "country": "India",
+    "coordinates": {"lat": 34.30, "lon": 75.52},
+    "base_elevation_masl": 3750,
+    "critical_springs_downstream": ["Drass_S1", "Zojila_N01"]
+  },
+  "kolahoi": {
+    "id": "kolahoi",
+    "name": "Kolahoi Glacier",
+    "state": "Jammu and Kashmir",
+    "district": "Anantnag",
+    "country": "India",
+    "coordinates": {"lat": 34.18, "lon": 75.32},
+    "base_elevation_masl": 3900,
+    "critical_springs_downstream": ["Lidder_S1", "Pahalgam_N03"]
+  },
+  "thajiwas": {
+    "id": "thajiwas",
+    "name": "Thajiwas Glacier",
+    "state": "Jammu and Kashmir",
+    "district": "Ganderbal",
+    "country": "India",
+    "coordinates": {"lat": 34.29, "lon": 75.26},
+    "base_elevation_masl": 3000,
+    "critical_springs_downstream": ["Sind_S1", "Sonamarg_N01"]
+  },
+  "zemu": {
+    "id": "zemu",
+    "name": "Zemu Glacier",
+    "state": "Sikkim",
+    "district": "North Sikkim",
+    "country": "India",
+    "coordinates": {"lat": 27.70, "lon": 88.25},
+    "base_elevation_masl": 4200,
+    "critical_springs_downstream": ["Teesta_S1", "Lachen_N02"]
+  },
+  "kangto": {
+    "id": "kangto",
+    "name": "Kangto Glacier",
+    "state": "Arunachal Pradesh",
+    "district": "East Kameng",
+    "country": "India",
+    "coordinates": {"lat": 27.86, "lon": 92.53},
+    "base_elevation_masl": 4100,
+    "critical_springs_downstream": ["Kameng_S1", "Seba_N01"]
+  }
+}
