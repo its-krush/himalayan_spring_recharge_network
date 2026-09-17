@@ -158,7 +158,7 @@ Create a Render Blueprint from `render.yaml`, or configure the services manually
 
 1. Create the PostgreSQL database from the included `render.yaml` Blueprint, or provide any managed PostgreSQL `DATABASE_URL`.
 2. Create a web service from this repository.
-3. The Blueprint uses `corepack enable && pnpm install --frozen-lockfile && pnpm build` as the build command.
+3. The Blueprint uses `pnpm install --frozen-lockfile && pnpm build` as the build command. It intentionally does not run `corepack enable`, because Render's system directory is read-only.
 4. The Blueprint runs `pnpm db:migrate && pnpm start` at service start so migrations run against the provisioned PostgreSQL database.
 5. No OAuth, owner, or database values are required. Render generates `JWT_SECRET` in the Blueprint; the database can be added later by setting `DATABASE_URL` and running `pnpm db:migrate`.
 6. The health check path is `/api/trpc/system.health`.

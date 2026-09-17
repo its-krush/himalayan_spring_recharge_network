@@ -3,12 +3,14 @@ services:
     name: himalayan-spring-recharge-network
     runtime: node
     plan: free
-    buildCommand: corepack enable && pnpm install --frozen-lockfile && pnpm build
+    buildCommand: pnpm install --frozen-lockfile && pnpm build
     startCommand: pnpm start
     healthCheckPath: /api/trpc/system.health
     envVars:
       - key: NODE_ENV
         value: production
+      - key: NODE_VERSION
+        value: 22.14.0
       - key: ENABLE_LIVE_INGESTION
         value: "false"
       - key: JWT_SECRET
