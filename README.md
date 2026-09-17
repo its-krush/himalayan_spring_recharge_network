@@ -6,7 +6,7 @@ A production-style, full-stack **disaster and water-resource decision-support pr
 
 ## What is implemented
 
-The application is a React 19 + TypeScript frontend served by an Express/tRPC backend with Drizzle/PostgreSQL persistence and Manus OAuth. The database schema includes users and roles, regions, data sources, model configurations, predictions, hospitals, water resources, disaster events, and audit logs. The frontend provides four role workspaces: Disaster Manager, Water Manager, Hospital Manager, and DBA.
+The application is a React 19 + TypeScript frontend served by an Express/tRPC backend. It runs independently with built-in local demo authentication and synthetic data; PostgreSQL persistence is optional. The database schema includes users and roles, regions, data sources, model configurations, predictions, hospitals, water resources, disaster events, and audit logs.
 
 The central terrain panel offers a performance-friendly SVG 3D projection and a 2D fallback, with togglable rainfall, rivers, glacier, flood, landslide, and hospital layers. It is a geospatial visualization scaffold intended to accept GeoJSON/terrain tiles later without rewriting the dashboard contracts.
 
@@ -16,7 +16,7 @@ The central terrain panel offers a performance-friendly SVG 3D projection and a 
 flowchart LR
   UI[React command center] --> RPC[tRPC procedures]
   UI --> REST[Read-only REST /api]
-  RPC --> AUTH[Manus OAuth + role middleware]
+  T --> A[Built-in local session + role middleware]
   RPC --> ENGINE[Transparent weighted engines]
   ENGINE --> DB[(PostgreSQL via Drizzle)]
   ENGINE --> PROV[Data provenance metadata]
@@ -28,7 +28,7 @@ The frontend is in `client/`. The backend domain model and deterministic engines
 
 ## Local setup
 
-Requirements: Node.js 22+, pnpm 10+, and a PostgreSQL database. A database is optional for read-only demo mode, but required for persisted users, model versions, and audit logs.
+Requirements: Node.js 22+ and pnpm 10+. PostgreSQL is optional; without `DATABASE_URL`, the app runs in standalone demo mode with in-memory model settings.
 
 ```bash
 git clone https://github.com/its-krush/himalayan_spring_recharge_network.git
@@ -48,10 +48,8 @@ See `.env.example`. The important variables are:
 
 | Variable | Purpose |
 | --- | --- |
-| `DATABASE_URL` | PostgreSQL connection string for the relational schema. |
-| `JWT_SECRET` | Session signing secret. |
-| `VITE_APP_ID`, `OAUTH_SERVER_URL`, `VITE_OAUTH_PORTAL_URL` | Manus OAuth application settings. |
-| `OWNER_OPEN_ID`, `OWNER_NAME` | Owner identity; the owner is promoted to DBA by the auth upsert helper. |
+| `DATABASE_URL` | Optional PostgreSQL connection string for durable persistence. |
+| `JWT_SECRET` | Optional session signing secret; a local fallback is used when omitted. |
 | `ENABLE_LIVE_INGESTION` | Set to `true` to enable the NASA POWER adapter. Default is `false`. |
 | `PORT` | Server port; Render supplies this automatically. |
 
@@ -133,7 +131,7 @@ The REST aliases are intentionally read-only. Mutations for hospital capacity, t
 
 ## Authentication and roles
 
-Manus OAuth creates the authenticated user and session cookie. Backend procedures enforce roles:
+The built-in local login creates a demo administrator session and backend procedures enforce roles:
 
 | Role | Capability |
 | --- | --- |
@@ -162,11 +160,10 @@ Create a Render Blueprint from `render.yaml`, or configure the services manually
 2. Create a web service from this repository.
 3. The Blueprint uses `corepack enable && pnpm install --frozen-lockfile && pnpm build` as the build command.
 4. The Blueprint runs `pnpm db:migrate && pnpm start` at service start so migrations run against the provisioned PostgreSQL database.
-5. Set `NODE_ENV=production`, `DATABASE_URL`, `JWT_SECRET`, OAuth values, `OWNER_OPEN_ID`, `OWNER_NAME`, and `ENABLE_LIVE_INGESTION=false`.
-6. Set the health check path to `/api/trpc/system.health` or `/api/openapi.json`.
-7. Update the Manus OAuth callback/redirect origin to the Render service URL.
+5. No OAuth, owner, or database values are required. Render generates `JWT_SECRET` in the Blueprint; the database can be added later by setting `DATABASE_URL` and running `pnpm db:migrate`.
+6. The health check path is `/api/trpc/system.health`.
 
-The server serves the built Vite assets from `dist/public` and binds to Render's `PORT`. No CUDA, proprietary GIS runtime, or local-only process is required.
+The server serves the built Vite assets from `dist/public` and binds to Render's `PORT`. No external identity provider, CUDA, proprietary GIS runtime, or local-only process is required.
 
 ## Known limitations and audit notes
 

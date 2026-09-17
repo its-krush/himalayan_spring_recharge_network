@@ -6,6 +6,7 @@ import { fetchNasaPower } from "./ingestion";
 import { publicProcedure, protectedProcedure, router } from "./_core/trpc";
 import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { sdk } from "./_core/sdk";
 
 const roleProcedure = (roles: string[]) => protectedProcedure.use(({ ctx, next }) => {
   if (!ctx.user || (!roles.includes(ctx.user.role) && ctx.user.role !== "admin")) throw new TRPCError({ code: "FORBIDDEN", message: "Your role cannot perform this action." });
@@ -17,6 +18,13 @@ export const appRouter = router({
   system: router({ health: publicProcedure.query(() => ({ ok: true, mode: process.env.ENABLE_LIVE_INGESTION === "true" ? "live-capable" : "demo" })) }),
   auth: router({
     me: publicProcedure.query((opts) => opts.ctx.user),
+    login: publicProcedure.mutation(({ ctx }) => {
+      const cookieOptions = getSessionCookieOptions(ctx.req);
+      return sdk.createSessionToken().then((token) => {
+        ctx.res.cookie(COOKIE_NAME, token, { ...cookieOptions, maxAge: 365 * 24 * 60 * 60 * 1000 });
+        return { success: true } as const;
+      });
+    }),
     logout: publicProcedure.mutation(({ ctx }) => { const cookieOptions = getSessionCookieOptions(ctx.req); ctx.res.clearCookie(COOKIE_NAME, { ...cookieOptions, maxAge: -1 }); return { success: true } as const; }),
   }),
   regions: router({

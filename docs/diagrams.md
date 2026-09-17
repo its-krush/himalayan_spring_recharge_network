@@ -6,7 +6,7 @@
 flowchart LR
   Browser[React / TypeScript command center] --> T[tRPC typed API]
   Browser --> R[REST aliases + OpenAPI]
-  T --> A[Manus OAuth + role middleware]
+  T --> A[Built-in local session + role middleware]
   T --> E[Risk and water engines]
   T --> D[(PostgreSQL + Drizzle)]
   I[Public data adapters] --> C[Cache and provenance records]
